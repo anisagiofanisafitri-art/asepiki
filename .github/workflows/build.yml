@@ -5,13 +5,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: unzip -q -o "ff-music.zip"
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: 17 }
       - uses: gradle/actions/setup-gradle@v4
         with: { gradle-version: "8.9" }
       - run: gradle assembleDebug --no-daemon
+        working-directory: ff-music
       - uses: actions/upload-artifact@v4
         with:
           name: FFMusic-apk
-          path: app/build/outputs/apk/debug/*.apk
+          path: ff-music/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
